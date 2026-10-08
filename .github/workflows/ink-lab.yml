@@ -1,0 +1,34 @@
+name: qudraw checks
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-lab-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - run: yarn test:typecheck
+      - run: yarn tsc --project examples/ink-lab/tsconfig.json
+      - run: yarn test:ink
+      - run: yarn build:lab
+      - run: yarn pack:npm
+      - run: yarn test:npm
+      - run: yarn test:npm-consumer

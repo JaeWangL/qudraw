@@ -1,0 +1,16 @@
+{
+  "name": "@qudraw/ink-lab",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "typecheck": "tsc --project tsconfig.json"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.18.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
